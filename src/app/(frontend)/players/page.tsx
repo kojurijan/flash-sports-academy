@@ -1,4 +1,6 @@
-import { getPayload } from 'payload';
+export const dynamic = 'force-dynamic';
+
+import { getPayload, type Where } from 'payload';
 import config from '@payload-config';
 import { Container } from '@/components/Container';
 import { AgeFilter } from './AgeFilter';
@@ -39,7 +41,7 @@ export default async function PlayersPage({ searchParams }: PageProps) {
     collection: 'players',
     limit: 50,
     depth: 1,
-    where: Object.keys(whereClause).length > 0 ? whereClause : undefined,
+    where: Object.keys(whereClause).length > 0 ? (whereClause as Where) : undefined,
   });
 
   const players: PlayerData[] = docs.map((doc) => {

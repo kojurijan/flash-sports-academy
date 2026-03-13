@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { getPayload } from 'payload';
 import config from '@payload-config';
@@ -21,14 +23,14 @@ export default async function EditEventPage({ params }: PageProps) {
       : null;
 
     const images = (event.images ?? [])
-      .map((item) => {
+      .map((item: { image: string | { id: number; url?: string } }) => {
         const img = item.image;
         if (img && typeof img === 'object') {
           return { id: img.id, url: img.url! };
         }
         return null;
       })
-      .filter((x): x is { id: number; url: string } => x !== null);
+      .filter((x: { id: number; url: string } | null): x is { id: number; url: string } => x !== null);
 
     return (
       <div className="p-6 lg:p-10">

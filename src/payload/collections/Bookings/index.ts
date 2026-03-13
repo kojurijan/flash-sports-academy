@@ -1,13 +1,13 @@
-import type { AccessArgs, CollectionConfig } from 'payload';
+import type { AccessArgs, AccessResult, CollectionConfig } from 'payload';
 
-const isAdminOrOwner = ({ req }: AccessArgs): boolean | object => {
+const isAdminOrOwner = ({ req }: AccessArgs): AccessResult => {
   if (!req.user) return false;
   if ((req.user as Record<string, unknown>).role === 'admin') return true;
   return { user: { equals: req.user.id } };
 };
 
-const isAdmin = ({ req }: AccessArgs): boolean => {
-  return (req.user as Record<string, unknown> | null)?.role === 'admin';
+const isAdmin = ({ req }: AccessArgs): AccessResult => {
+  return ((req.user as Record<string, unknown> | null)?.role === 'admin') as AccessResult;
 };
 
 export const Bookings: CollectionConfig = {

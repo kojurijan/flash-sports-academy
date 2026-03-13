@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getPayload } from 'payload';
 import config from '@payload-config';
 import { getCurrentUser } from '@/lib/auth';
@@ -13,10 +15,18 @@ export default async function MyBookingsPage() {
   const user = await getCurrentUser();
   const payload = await getPayload({ config });
 
+  if (!user?.id) {
+    return (
+      <div className="p-6 lg:p-10">
+        <p className="text-black/60">Unable to load bookings. Please ensure you are logged in.</p>
+      </div>
+    );
+  }
+
   const { docs: bookings } = await payload.find({
     collection: 'bookings',
     where: {
-      user: { equals: user?.id },
+      user: { equals: user.id },
     },
     sort: '-date',
     limit: 50,
