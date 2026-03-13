@@ -33,6 +33,11 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# lock files (keep only bun.lock)
+package-lock.json
+yarn.lock
+.yarnrc.yml
+
 # vercel
 .vercel
 
